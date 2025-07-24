@@ -10,6 +10,7 @@ This repository contains a Python-based network management tool with a graphical
 *   **Device Management**: Displays device details such as Host, Hostname, User, and Device Type in a table view.
 *   **Network Health Checks**: Includes functionality to perform health checks, such as verifying software versions and uptime.
 *   **Configuration Management**: The UI includes components for configuring devices and running security tests.
+*   **Soon Port Security Features for a Cisco Router**
 
 ## Setup and Installation
 
