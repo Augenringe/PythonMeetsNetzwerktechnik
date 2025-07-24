@@ -12,6 +12,13 @@ class Frm_Main(QMainWindow, Ui_MainWindow):
         self.tbl_components.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbl_components.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.tbl_components.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        
+        self.tbl_components_2.setRowCount(1)
+        self.tbl_components_2.setColumnCount(4)
+        self.tbl_components_2.setHorizontalHeaderLabels(["Host","Hostname", "User", "Device-Type"])
+        self.tbl_components_2.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tbl_components_2.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.tbl_components_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
   
 
     def show_devices(self, data):
