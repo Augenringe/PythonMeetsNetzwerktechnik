@@ -1,35 +1,40 @@
 from netmiko import ConnectHandler
-import requests
+import customtkinter as ctk
 from datetime import datetime
 
-# Telegram-Konfiguration
-TELEGRAM_TOKEN = ""  # Bot-Token
-TELEGRAM_CHAT_ID = ""  # Chat-ID
+# GUI-Konfiguration
+def show_violation_gui(mac, port):
+    ctk.set_appearance_mode("system")  # "light", "dark", or "system"
+    root = ctk.CTk()
+    root.geometry("800x800")
+    root.title("⚠️ Port-Security Violation")
 
-def send_telegram_alert(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown"
-    }
-    requests.post(url, data=payload)
-
-def format_violation_output(raw_output):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    lines = raw_output.strip().splitlines()
-    if not lines:
-        return None
+    msg = f"⚠️ Port-Security-Verstoß erkannt!\n\n🕒 {timestamp}\n🔌 Port: {port}\n🔐 MAC: {mac}"
 
-    formatted = f"⚠️ *Port-Security Violation erkannt!*\n\n🕒 *Zeitpunkt:* `{timestamp}`\n"
+    label = ctk.CTkLabel(root, text=msg, font=("Arial", 16), justify="left", wraplength=400)
+    label.pack(padx=20, pady=20)
+
+    button = ctk.CTkButton(root, text="OK", command=root.destroy)
+    button.pack(pady=10)
+
+    root.mainloop()
+
+
+# Violation-Formatierung
+def parse_violation_output(raw_output):
+    lines = raw_output.strip().splitlines()
+    violations = []
     for line in lines:
         parts = line.split()
         if len(parts) >= 2:
             mac = parts[0]
             intf = parts[1]
-            formatted += f"\n🔌 *Port:* `{intf}`\n🔐 *MAC:* `{mac}`\n"
-    return formatted
+            violations.append((mac, intf))
+    return violations
 
+
+# Port-Security Konfiguration und Prüfung
 def deploy_port_security(host, user, pwd, intfs):
     dev = {
         "device_type": "cisco_ios",
@@ -37,6 +42,7 @@ def deploy_port_security(host, user, pwd, intfs):
         "username": user,
         "password": pwd,
     }
+
     cmd_list = [
         f"interface range {intfs}",
         "switchport mode access",
@@ -51,13 +57,14 @@ def deploy_port_security(host, user, pwd, intfs):
         print(conn.send_config_set(cmd_list))
         conn.save_config()
 
-        # Prüfen auf Violations (nur betroffene MACs mit Status "SecureViolation")
-        violation_data = conn.send_command("show port-security address | include SecureViolation")
+        # Prüfen auf Violations
+        output = conn.send_command("show port-security address | include SecureViolation")
+        violations = parse_violation_output(output)
 
-        if violation_data.strip():
-            message = format_violation_output(violation_data)
-            if message:
-                send_telegram_alert(message)
+        for mac, port in violations:
+            show_violation_gui(mac, port)
 
+
+# Hauptausführung
 if __name__ == "__main__":
     deploy_port_security("192.168.1.1", "admin", "pass", "Gig1/0/1-10")
