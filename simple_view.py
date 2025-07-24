@@ -14,7 +14,7 @@ class Simple_Main(QMainWindow, Ui_MainWindow):
 
     def register_native_command_slot(self, event_handler):
         self.btn_command_go.clicked.connect(event_handler)
- 
+
     def get_selected_device(self)->int:
         device_index: int = 0
         try:
@@ -37,4 +37,3 @@ class Simple_Main(QMainWindow, Ui_MainWindow):
 
 
 
- 

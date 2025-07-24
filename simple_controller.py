@@ -11,7 +11,7 @@ class Simple_Controller:
         self.simulation = simulation
         self.filename = filename
         self.model_native_command = Native_Command()
- 
+
         # create data model for components and load data/components
         self.data_model = Devices(self.simulation, filename)
         data_read, successful = self.data_model.load_data()
@@ -27,7 +27,7 @@ class Simple_Controller:
         self.gui_view.register_native_command_slot(self.execute_native_command)
 
     def execute_native_command(self):
-       
+
         device_idx = self.gui_view.get_selected_device()
 
         # show componetn data

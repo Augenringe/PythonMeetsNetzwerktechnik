@@ -3,7 +3,7 @@ from main_view import Frm_Main             # View-Klasse importieren
 
 
 def main():
- 
+
     # create GUI Application
     app = QApplication()
     frm_main = Frm_Main()

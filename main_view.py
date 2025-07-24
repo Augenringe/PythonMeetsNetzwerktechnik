@@ -19,7 +19,7 @@ class Frm_Main(QMainWindow, Ui_MainWindow):
         self.tbl_components_2.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbl_components_2.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.tbl_components_2.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
-  
+
 
     def show_devices(self, data):
         self.tbl_components.setRowCount(len(data))

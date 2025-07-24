@@ -3,7 +3,7 @@ import argparse
 from devices import Devices
 
 def main_devices(simulation: bool, filename: str):
- 
+
     # create instance of Devices
     my_devices: Devices = Devices(simulation, filename)
     data_read, successful = my_devices.load_data()

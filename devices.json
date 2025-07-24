@@ -1,18 +1,18 @@
 {
   "devices": [
     {
-      "host": "172.16.0.2",
-      "hostname": "CSR1",
+      "host": "",
+      "hostname": "R1",
       "username": "admin",
-      "password": "geheim",
+      "password": "adminpass",
       "device_type": "cisco_xe",
       "secret": "geheim"
     },
     {
-      "host": "172.16.0.2",
+      "host": "192.168.1.48",
       "hostname": "S1",
       "username": "admin",
-      "password": "geheim",
+      "password": "adminpass",
       "device_type": "cisco_ios",
       "secret": "geheim"
     }

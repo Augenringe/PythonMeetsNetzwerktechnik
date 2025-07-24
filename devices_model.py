@@ -21,7 +21,7 @@ def get_host(self, index:int)->str:
 
 def get_host_name(self, index:int)->str:
     return self.device_list[index]["hostname"]
-   
+
 def get_user(self, index:int)->str:
     return self.device_list[index]["username"]
 
