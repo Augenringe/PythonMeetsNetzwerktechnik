@@ -2,12 +2,12 @@ import json
 
 class Devices: 
 
+
     def __init__(self, simulation: bool, filename: str): 
 
         self.simulation = simulation 
 
         self.filename = filename  
-
         self.device_list = [] # list of dictionaries 
 
     def __len__(self): 

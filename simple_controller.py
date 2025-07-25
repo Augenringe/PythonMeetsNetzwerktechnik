@@ -1,7 +1,7 @@
 from simple_view import Simple_Main
-
 from devices import Devices
 from Native_Command import Native_Command
+
 
 class Simple_Controller:
     def __init__(self, view: Simple_Main, simulation: bool, filename: str):

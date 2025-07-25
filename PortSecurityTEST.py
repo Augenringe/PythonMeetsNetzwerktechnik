@@ -1,25 +1,23 @@
 from netmiko import ConnectHandler
-import customtkinter as ctk
+import tkinter as tk
 from datetime import datetime
 
-# GUI-Konfiguration
+# GUI-Konfiguration mit normalem Tkinter
 def show_violation_gui(mac, port):
-    ctk.set_appearance_mode("system")  # "light", "dark", or "system"
-    root = ctk.CTk()
-    root.geometry("800x800")
+    root = tk.Tk()
+    root.geometry("450x250")
     root.title("⚠️ Port-Security Violation")
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     msg = f"⚠️ Port-Security-Verstoß erkannt!\n\n🕒 {timestamp}\n🔌 Port: {port}\n🔐 MAC: {mac}"
 
-    label = ctk.CTkLabel(root, text=msg, font=("Arial", 16), justify="left", wraplength=400)
+    label = tk.Label(root, text=msg, font=("Arial", 14), justify="left", wraplength=400)
     label.pack(padx=20, pady=20)
 
-    button = ctk.CTkButton(root, text="OK", command=root.destroy)
+    button = tk.Button(root, text="OK", command=root.destroy)
     button.pack(pady=10)
 
     root.mainloop()
-
 
 # Violation-Formatierung
 def parse_violation_output(raw_output):
@@ -32,7 +30,6 @@ def parse_violation_output(raw_output):
             intf = parts[1]
             violations.append((mac, intf))
     return violations
-
 
 # Port-Security Konfiguration und Prüfung
 def deploy_port_security(host, user, pwd, intfs):
@@ -63,7 +60,6 @@ def deploy_port_security(host, user, pwd, intfs):
 
         for mac, port in violations:
             show_violation_gui(mac, port)
-
 
 # Hauptausführung
 if __name__ == "__main__":

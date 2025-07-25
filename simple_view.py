@@ -10,7 +10,7 @@ class Simple_Main(QMainWindow, Ui_MainWindow):
 
     def show_message(self, message: str):
         print(message)
-        self.lbl_message.setText(message)
+        #self.lbl_message.setText(message)
 
     def register_native_command_slot(self, event_handler):
         self.btn_command_go.clicked.connect(event_handler)
